@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuikGrid", "QuikGrid-vc9.vcproj", "{12A05AF8-9B49-4D44-BABF-2E7C513D1353}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{12A05AF8-9B49-4D44-BABF-2E7C513D1353}.Debug|Win32.ActiveCfg = Debug|Win32
+		{12A05AF8-9B49-4D44-BABF-2E7C513D1353}.Debug|Win32.Build.0 = Debug|Win32
+		{12A05AF8-9B49-4D44-BABF-2E7C513D1353}.Release|Win32.ActiveCfg = Release|Win32
+		{12A05AF8-9B49-4D44-BABF-2E7C513D1353}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

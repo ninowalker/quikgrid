@@ -1,0 +1,21 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuikGrid", "QuikGrid-vc7.vcproj", "{12A05AF8-9B49-4D44-BABF-2E7C513D1353}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{12A05AF8-9B49-4D44-BABF-2E7C513D1353}.Debug.ActiveCfg = Debug|Win32
+		{12A05AF8-9B49-4D44-BABF-2E7C513D1353}.Debug.Build.0 = Debug|Win32
+		{12A05AF8-9B49-4D44-BABF-2E7C513D1353}.Release.ActiveCfg = Release|Win32
+		{12A05AF8-9B49-4D44-BABF-2E7C513D1353}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

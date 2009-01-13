@@ -5,14 +5,15 @@
 //                                Copyright (c) John Coulthard, 2002
 //***********************************************************************
 #include <stdlib.h>
-#include <iostream.h>
+#include <iostream>
 #include "scatdata.h"
 #include "surfgrid.h"
 #include "xpand.h"
 #include "contour.h" 
 
-void main()
+int main()
 {
+ using namespace std;
  ScatData Points(100);              // Define up to 100 scattered data points.
 
  static const int nx = 10, ny = 10; // Grid dimensions.
@@ -74,6 +75,7 @@ void main()
   Contour( Result , 14.0 ) ;
 
   cout << "The end." << endl; 
+  return 1;
 }
 //***********************************************************************
 //           D o   L i n e    T o
@@ -82,6 +84,7 @@ void main()
 //************************************************************************
 void DoLineTo( float x, float y, int draw )
 {
+  using namespace std;
   cout << x << " " << y ;
   if( draw ) cout << " draw " << endl;
   else       cout << "    move " << endl; 

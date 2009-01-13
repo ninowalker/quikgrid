@@ -20,3 +20,5 @@ long XpandSample( const long i );
 
 void Xpand( SurfaceGrid &Zgrid, ScatData &RandomData );
 
+static float UNDEFINED_Z = -99999.;
+

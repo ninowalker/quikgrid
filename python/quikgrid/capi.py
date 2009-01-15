@@ -1,5 +1,6 @@
 import atexit
 from ctypes import cdll, CDLL, pydll, PyDLL, CFUNCTYPE
+from ctypes.util import find_library
 from ctypes import string_at, byref, c_int, c_long, c_size_t, c_char_p, c_double, c_void_p, c_float
 from ctypes import Structure, pointer, cast, POINTER, addressof
 import numpy
@@ -13,7 +14,7 @@ except ImportError, e:
 try:
     lqg = CDLL( './libquikgrid.so' )
 except OSError,e:
-    lqg = CDLL( '/usr/lib/libquikgrid.so' )
+    lqg = CDLL(find_library('quikgrid'))
     
 UNDEFINED_Z = -99999.0 #c_float.in_dll(lqg, "UNDEFINED_Z")
 NaN = float('NaN')

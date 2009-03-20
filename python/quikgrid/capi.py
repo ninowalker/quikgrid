@@ -3,7 +3,7 @@ from ctypes import cdll, CDLL, pydll, PyDLL, CFUNCTYPE
 from ctypes.util import find_library
 from ctypes import string_at, byref, c_int, c_long, c_size_t, c_char_p, c_double, c_void_p, c_float
 from ctypes import Structure, pointer, cast, POINTER, addressof
-import numpy
+import numpy, os
 
 try:
     from shapely.geometry import LineString, Polygon, Point
@@ -11,11 +11,17 @@ try:
 except ImportError, e:
     _HAS_SHAPELY = False
 
-try:
-    lqg = CDLL( './libquikgrid.so' )
-except OSError,e:
-    lqg = CDLL(find_library('quikgrid'))
-    
+
+lqg = None
+for ext in ['so','dylib','so']:
+    try:
+        lqg = CDLL( os.path.join(os.path.basename(__file__), 'libquikgrid.' + ext ) )
+    except OSError,e:
+        pass
+
+if not lqg:
+    raise ImportError("Cannot find libquikgrid shared object.")
+
 UNDEFINED_Z = -99999.0 #c_float.in_dll(lqg, "UNDEFINED_Z")
 NaN = float('NaN')
             

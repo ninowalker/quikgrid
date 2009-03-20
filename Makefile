@@ -21,8 +21,10 @@ core:
 core-install:
 	cd core && $(CMAKE) -DBUILD_SHARED_LIBS=OFF . && make all install
 
-python: python-install
+python: python-build python-install
+
+python-build:
+	cd core && $(CMAKE) -DBUILD_SHARED_LIBS=ON . && make
 
 python-install:
-	cd core && $(CMAKE) -DBUILD_SHARED_LIBS=ON . && make all install
 	cd python && python$(PYTHON_VERSION) setup.py install

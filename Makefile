@@ -1,12 +1,10 @@
 PYTHON_VERSION ?= 2.4
 
 OS := $(shell uname)
-CMAKE = $(shell which cmake)
- 
+CMAKE = $(shell which cmake) -DBUILD_SHARED_LIBS=OFF
+
 ifeq ($(OS),Darwin)
-ifeq ($(CMAKE),)
-	CMAKE = /sw/bin/cmake
-endif
+CMAKE = $(shell which cmake) 
 endif
 
 .PHONY: core python python-install core-install
@@ -16,10 +14,10 @@ all: core
 install: core core-install python-install
 
 core:
-	cd core && $(CMAKE) -DBUILD_SHARED_LIBS=OFF . && make all
+	cd core && $(CMAKE) . && make all
 
 core-install:
-	cd core && $(CMAKE) -DBUILD_SHARED_LIBS=OFF . && make all install
+	cd core && $(CMAKE) . && make all install
 
 python: python-build python-install
 

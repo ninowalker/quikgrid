@@ -1,0 +1,5 @@
+env = Environment()
+
+lib = env.SharedLibrary('quikgrid', Glob('*.cpp'))
+env.Alias('install', env.Install('/usr/local/lib', lib))
+env.Alias('install', env.Install('/usr/local/include/quikgrid', Glob('*.h')))

@@ -181,6 +181,7 @@ csDestroy( ContourSeq* cs) {
 }
 };
 
+#ifndef DEMO_APP
 void DoLineTo( float x, float y, int drawtype ) {
 	if (!globalseq) {
 		globalseq = new ContourSeq();
@@ -197,3 +198,4 @@ void DoLineTo( float x, float y, int drawtype ) {
 int main() {
 	return 1;	
 }
+#endif

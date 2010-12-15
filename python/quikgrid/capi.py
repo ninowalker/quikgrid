@@ -8,14 +8,14 @@ import numpy, os
 try:
     from shapely.geometry import LineString, Polygon, Point
     _HAS_SHAPELY = True
-except ImportError, e:
+except:
     _HAS_SHAPELY = False
 
 
 lqg = None
 for ext in ['so','dylib','so']:
     try:
-        lqg = CDLL( os.path.join(os.path.basename(__file__), 'libquikgrid.' + ext ) )
+        lqg = CDLL( os.path.join(os.path.dirname(__file__), 'libquikgrid.' + ext ) )
     except OSError,e:
         pass
 

@@ -2,3 +2,8 @@ python/build/
 python/dist/
 python/quikgrid.egg-info/
 python/quikgrid/capi.pyc
+*.o
+core/demo/demo
+*.dylib
+*.so
+*.dll

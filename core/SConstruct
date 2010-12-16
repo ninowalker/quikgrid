@@ -4,13 +4,16 @@ import sys, platform
 env = Environment()
 
 if sys.platform == "darwin":
-    #env.Append(FRAMEWORKSFLAGS="-flat_namespace -undefined suppress")
+    env.Append(FRAMEWORKSFLAGS="-flat_namespace -undefined suppress")
     if True or platform.architecture()[0] == '64-bit':
         env.Append(CPPFLAGS = ' -arch x86_64')
         env.Append(LINKFLAGS = ' -arch x86_64')
 
-env.Program('demo/demo', Glob('*.cpp') + Glob('demo/*.cpp'), CPPFLAGS='-DDEMO_APP')
+corefiles = 'contour.cpp gridxtyp.cpp scatdata.cpp surfgrid.cpp xpand.cpp'.split(' ')
 
-lib = env.SharedLibrary('quikgrid', Glob('*.cpp'))
+env.Program('demo/demo', corefiles + ['demo.cpp'], CPPFLAGS='-DDEMO_APP')
+
+lib = env.SharedLibrary('quikgrid', corefiles )
+pylib = env.SharedLibrary('quikgrid_c', corefiles + ['qgcapi.cpp'])
 env.Alias('install', AlwaysBuild(env.Install('/usr/local/lib', lib)))
 env.Alias('install', env.Install('/usr/local/include/quikgrid', Glob('*.h')))

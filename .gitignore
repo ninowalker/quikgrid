@@ -1,0 +1,4 @@
+python/build/
+python/dist/
+python/quikgrid.egg-info/
+python/quikgrid/capi.pyc

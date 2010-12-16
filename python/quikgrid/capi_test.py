@@ -2,7 +2,6 @@ from capi import SurfaceGrid
 import time
 import numpy
 import filecmp, os
-from shapely.geometry import Polygon, LineString
 
 def test_basic():
     """ testing the basic functionality. """
@@ -68,6 +67,11 @@ def test_basic():
     assert len(pts) == sg.nx * sg.ny
     
     # test contour/shapely
+    try:
+        from shapely.geometry import Polygon
+    except:
+        print "Error importing shapely, skipping."
+        return
     contours = sg.contour(14.0, as_geometry=True, closure_tolerance=0.1)
     print contours
     fp = open("contours_geom.txt", "w")

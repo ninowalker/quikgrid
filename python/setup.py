@@ -7,10 +7,8 @@ if os.uname()[0] == 'Darwin':
 elif os.uname()[0] == 'cygwin':
     so_extension = '.dll'
 
-LIBSO = os.path.join('..','core','libquikgrid' + so_extension)
+LIBSO = os.path.join('..','core','libquikgrid_c' + so_extension)
 
-# build and copy libgraphserver.so
-subprocess.call(["make","-s", "-C","..","python-build"])
 subprocess.call(["cp",LIBSO,"quikgrid/"])
 
 setup(name='quikgrid',
@@ -18,6 +16,5 @@ setup(name='quikgrid',
       description='Python Quikgrid API',
       packages = find_packages(exclude=['quikgrid.capi_test']),
       zip_safe=False,
-        
-      package_data = {'quikgrid':['libquikgrid' + so_extension]}
+      package_data = {'quikgrid':['libquikgrid_c' + so_extension]},
      )

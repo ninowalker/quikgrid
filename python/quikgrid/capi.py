@@ -3,7 +3,7 @@ from ctypes import cdll, CDLL, pydll, PyDLL, CFUNCTYPE
 from ctypes.util import find_library
 from ctypes import string_at, byref, c_int, c_long, c_size_t, c_char_p, c_double, c_void_p, c_float
 from ctypes import Structure, pointer, cast, POINTER, addressof
-import numpy, os
+import os, math
 
 try:
     from shapely.geometry import LineString, Polygon, Point
@@ -11,11 +11,17 @@ try:
 except:
     _HAS_SHAPELY = False
 
+try:
+    import numpy
+    _HAS_NUMPY = True
+except:
+    _HAS_NUMPY = False
+
 
 lqg = None
 for ext in ['so','dylib','so']:
     try:
-        lqg = CDLL( os.path.join(os.path.dirname(__file__), 'libquikgrid.' + ext ) )
+        lqg = CDLL( os.path.join(os.path.dirname(__file__), 'libquikgrid_c.' + ext ) )
     except OSError,e:
         pass
 
@@ -30,9 +36,6 @@ def pycapi(func, rettype, cargs=None):
     func.restype = rettype
     if cargs:
         func.argtypes = cargs
-           
-        
-
 
 class Point3d(Structure):
     _fields_ = (('x', c_float),('y', c_float),('z', c_float))
@@ -105,7 +108,7 @@ class SurfaceGrid(object):
         return z
     
     def setZ(self, i, j, z):
-        if numpy.isnan(z):
+        if math.isnan(z):
             z = UNDEFINED_Z
         lqg.sgSetZ(self.soul, i, j, z)
         
@@ -169,7 +172,9 @@ class SurfaceGrid(object):
             a.append(b)
         return a
     
-    def to_array(self):
+    def to_numpy_array(self):
+        if not _HAS_NUMPY:
+            raise "to_numpy_array function requires Numpy"
         a = numpy.zeros(self.nx*self.ny)
         for i in range(self.nx):                
             for j in range(self.ny):
@@ -205,16 +210,17 @@ class _SurfaceGridIterator:
         return (self.xvals[self.i], self.yvals[self.j], self.g.z(self.i,self.j))
 
 """ Setup the result and arguments types for the C methods. """
-#pycapi(lqg.sgNew, c_void_p, [c_int, c_int, POINTER(Point3d), c_int, c_int])
-lqg.sgNew.restype = c_void_p
-pycapi(lqg.sgDestroy, c_void_p, [c_void_p])
+pycapi(lqg.sgNew, c_void_p, [c_int, c_int, c_float, c_float, c_float])
+pycapi(lqg.sgDestroy, None, [c_void_p])
 pycapi(lqg.sgContour, POINTER(_ContourSeq), [c_void_p, c_float])
 pycapi(lqg.sgInterpolate, c_float, [c_void_p, c_float, c_float])
+pycapi(lqg.sgExpand, None, [c_void_p, c_void_p, c_int])
 pycapi(lqg.csDestroy, c_void_p, [POINTER(_ContourSeq)])
 pycapi(lqg.sgX, c_float, [c_void_p, c_int])
 pycapi(lqg.sgY, c_float, [c_void_p, c_int])
 pycapi(lqg.sgZ, c_float, [c_void_p, c_int, c_int])
 pycapi(lqg.sgSetZ, c_void_p, [c_void_p, c_int, c_int, c_float])
+pycapi(lqg.sgValue, c_void_p, [c_void_p, c_int, c_int, c_void_p])
 
     
     

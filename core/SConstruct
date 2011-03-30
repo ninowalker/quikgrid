@@ -1,8 +1,14 @@
 import distutils.sysconfig
-import sys, platform 
+import sys, platform
+# see http://www.scons.org/wiki/Installer
+import installer
 
-env = Environment()
+opts = Variables( 'options.conf', ARGUMENTS )
+installer.AddOptions(opts)
+env = Environment(variables=opts)
 
+# The library is built with a global undefined so that it can be incorporated into other
+# code bases.
 if sys.platform == "darwin":
     env.Append(FRAMEWORKSFLAGS="-flat_namespace -undefined suppress")
     if True or platform.architecture()[0] == '64-bit':
@@ -11,9 +17,16 @@ if sys.platform == "darwin":
 
 corefiles = 'contour.cpp gridxtyp.cpp scatdata.cpp surfgrid.cpp xpand.cpp'.split(' ')
 
-env.Program('demo/demo', corefiles + ['demo.cpp'], CPPFLAGS='-DDEMO_APP')
+demo_prog = env.Program('demo/demo', corefiles + ['demo.cpp'], CPPFLAGS='-DDEMO_APP')
 
 lib = env.SharedLibrary('quikgrid', corefiles )
 pylib = env.SharedLibrary('quikgrid_c', corefiles + ['qgcapi.cpp'])
-env.Alias('install', AlwaysBuild(env.Install('/usr/local/lib', lib)))
-env.Alias('install', env.Install('/usr/local/include/quikgrid', Glob('*.h')))
+
+# create the installer
+install = installer.Installer(env)
+install.AddLibrary(lib)
+install.AddLibrary(pylib)
+install.AddHeaders( ".", "*.h", basedir="quikgrid" )
+
+#env.Alias('install', AlwaysBuild(env.Install(idir_lib, lib)))
+#env.Alias('install', env.Install(idir_inc + '/quikgrid', Glob('*.h')))
